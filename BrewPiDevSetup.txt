@@ -1,0 +1,88 @@
+BrewPi
+
+Built on Ubuntu 16.0.4
+
+Reference guide:
+See http://www.jumpnowtek.com/rpi/Raspberry-Pi-Systems-with-Yocto.html
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~ One time setup ~~~~~~~~~~~~~~~~~~~~
+
+Download the following packages: (some aren't neccessary) lol
+build-essential
+chrpath
+diffstat
+gawk
+git
+libncurses5-dev
+pkg-config
+subversion
+texi2html
+texinfo
+python2.7
+
+Start work in the following directory
+~/Projects
+
+Clone the Yacto poky repository (morty branch):
+git clone -b morty git://git.yoctoproject.org/poky.git poky-morty
+
+Clone the following repositories inside the poky repo you just cloned:
+cd poky-morty
+git clone -b morty git://git.openembedded.org/meta-openembedded
+git clone -b morty https://github.com/meta-qt5/meta-qt5.git
+git clone -b morty git://git.yoctoproject.org/meta-raspberrypi
+
+Setup and clone the BrewPi repo:
+mkdir -p ~/Projects/rpi/build/conf
+cd ~/Projects/rpi
+git clone http://24.240.39.24/jim/meta-brewpi
+
+Link to config files (need hella harddrive space ~80GB)
+ln ~/Projects/rpi/meta-brewpi/conf/bblayers.conf ~/Projects/rpi/build/conf
+ln ~/Projects/rpi/meta-brewpi/conf/local.conf ~/Projects/rpi/build/conf
+
+Reference folder structure:
+~/Projects/poky-morty/
+     meta-openembedded/
+     meta-qt5/
+     meta-raspberrypi
+     ...
+~/Projects/rpi/
+     meta-brewpi/
+         ...
+     build/
+         conf/
+
+
+
+~~~~~~~~~~~~~~~~~~~~ Build and Deploy ~~~~~~~~~~~~~~~~~~~~
+
+Run the build:
+source poky-morty/oe-init-build-env ~/Projects/rpi/build
+bitbake brewpi-image
+
+
+Copy to the SD card:
+find the card using lsblk
+cd ~/Projects/rpi/meta-rpi/scripts
+sudo ./mk2parts mmcblk0
+sudo mkdir /media/card
+export OETMP=${HOME}/Projects/rpi/build/tmp
+export MACHINE=raspberrypi2
+./copy_boot.sh mmcblk0
+./copy_rootfs.sh mmcblk0 brewpi
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~ Notes and Tools ~~~~~~~~~~~~~~~~~~~~
+
+The user name of the raspberry pi is root
+
+To see list of available packages for adding to image file:
+cd ~/Projects/
+source poky-morty/oe-init-build-env rpi/build
+bitbake -s
