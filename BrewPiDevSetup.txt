@@ -86,3 +86,8 @@ To see list of available packages for adding to image file:
 cd ~/Projects/
 source poky-morty/oe-init-build-env
 bitbake -s
+
+To clean the image
+cd ~/Projects/
+source poky-morty/oe-init-build-env
+bitbake -c clean brewpi-image

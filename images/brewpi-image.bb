@@ -8,7 +8,10 @@ BREW_PKGS = " \
     vim \
     freerdp \
     python-flask \
+    rpi-gpio \
     fileoverlay \
+    boot-script \
+    os-tweaks \
 "
 
 IMAGE_INSTALL += " \
