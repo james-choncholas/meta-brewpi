@@ -6,7 +6,8 @@ require console-image.bb
 
 BREW_PKGS = " \
     vim \
-    apache2 \
+    freerdp \
+    python-flask \
     fileoverlay \
 "
 

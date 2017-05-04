@@ -54,7 +54,8 @@ Reference folder structure:
 
 In ~/Projects/poky-morty/meta-openembedded/meta-webserver/recipes-httpd/apache2
 change the two apache .bb files. The SRC_URI variable needs to use an archived
-version of apache. For example SRC_URI = "http://archive.apache.org/..."
+version of apache. This is probably done by appending "archive." to the url.
+For example SRC_URI = "http://archive.apache.org/..."
 
 
 ~~~~~~~~~~~~~~~~~~~~ Build and Deploy ~~~~~~~~~~~~~~~~~~~~

@@ -1,0 +1,11 @@
+	//create short term graph (POT). contains the last 90 sec
+	var r = Raphael("recentPotGraph");
+	var lines = r.linechart(20,5,320,300,[0,-10,-20,-30,-40,-50,-60,-70,-80,-90],{{potTempData[0:10]}}, {colors: ['#ac39ac'], axis: '0 1 1 0', axisxstep: '9', symbol: 'circle', smooth: false}).hoverColumn(function (){
+		this.tags = r.set();
+
+		for (var i = 0, ii = this.y.length; i < ii; i++) {
+			this.tags.push(r.tag(this.x, this.y[i], this.values[i], 160,10).insertBefore(this).attr([{fill: "#fff"}, {fill: this.symbols[i].attr("fill") }]));
+		}
+	}, function () {
+		this.tags && this.tags.remove();
+	});
