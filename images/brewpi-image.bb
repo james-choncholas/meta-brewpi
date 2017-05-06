@@ -11,7 +11,6 @@ BREW_PKGS = " \
     rpi-gpio \
     fileoverlay \
     boot-script \
-    os-tweaks \
 "
 
 IMAGE_INSTALL += " \

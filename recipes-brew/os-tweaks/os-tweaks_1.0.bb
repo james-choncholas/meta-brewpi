@@ -8,13 +8,13 @@ inherit allarch
 do_install() {
 
     # setup temperature sensor(s?)    
-    echo "dtoverlay=w1-gpio,gpiopin=21" >> ${D}/boot/config.txt
+    #echo "dtoverlay=w1-gpio,gpiopin=21" >> ${D}/boot/config.txt
 
     # add the wifi password :)
     #network={
     #    key_mgmt=WPA-PSK
-    #    ssid="<ssid>"
-    #    psk="<passphrase>"
+    #    ssid="Brewcifier"
+    #    psk="brewmebro"
     #}
 
 }

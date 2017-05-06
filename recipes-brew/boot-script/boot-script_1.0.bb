@@ -14,6 +14,7 @@ PR = "r0"
 # Add a line similar to the following to ensure any packages needed for the scripts to run are installed in the image.
 #
 # RDEPENDS_${PN} = "parted"
+RDEPENDS_${PN} = "bash"
 
 # SRC_URI specifies the files that are to be used as the scripts.
 #
@@ -51,13 +52,13 @@ do_install() {
     #
 
     install -d ${D}${sysconfdir}/init.d
-    install -d ${D}${sysconfdir}/rcS.d
+    #install -d ${D}${sysconfdir}/rcS.d
     install -d ${D}${sysconfdir}/rc1.d
     install -d ${D}${sysconfdir}/rc2.d
     install -d ${D}${sysconfdir}/rc3.d
     install -d ${D}${sysconfdir}/rc4.d
     install -d ${D}${sysconfdir}/rc5.d
-    install -d ${D}${sbindir}
+    #install -d ${D}${sbindir}
 
     #
     # Install files in to the image
@@ -90,3 +91,21 @@ do_install() {
     ln -sf ../init.d/run-script      ${D}${sysconfdir}/rc4.d/K90run-script
     ln -sf ../init.d/run-script      ${D}${sysconfdir}/rc5.d/S90run-script
 }
+
+#FILES_${PN} += "{sysconfdir}/init.d/run-script"
+
+FILES_${PN} += "                      \
+    ${sysconfdir}/init.d/run-script   \
+    ${sysconfdir}/rc1.d/K90run-script \
+    ${sysconfdir}/rc2.d/K90run-script \
+    ${sysconfdir}/rc3.d/K90run-script \
+    ${sysconfdir}/rc4.d/K90run-script \
+    ${sysconfdir}/rc5.d/S90run-script \
+    ${sysconfdir}/init.d              \
+    ${sysconfdir}/rc1.d               \
+    ${sysconfdir}/rc2.d               \
+    ${sysconfdir}/rc3.d               \
+    ${sysconfdir}/rc4.d               \
+    ${sysconfdir}/rc5.d               \
+    "
+
