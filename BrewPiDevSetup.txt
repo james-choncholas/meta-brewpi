@@ -67,7 +67,7 @@ bitbake brewpi-image
 
 Copy to the SD card:
 find the card using lsblk
-cd ~/Projects/poky-morty/meta-rpi/scripts
+cd ~/Projects/poky-morty/meta-brewpi/scripts
 sudo ./mk2parts mmcblk0
 sudo mkdir /media/card
 export OETMP=${HOME}/Projects/build/tmp
