@@ -34,7 +34,7 @@ class HardwareUtility:
 #	Software:
 #		Add the following lines to /boot/config.txt
 #			dtoverlay=w1-gpio
-#		To manually read the sensor, execute the following commands in a terminal
+#		Execute the following commands in a terminal
 #			sudo modprobe w1-gpio
 #			sudo modprobe w1-therm
 #			cd /sys/bus/w1/devices

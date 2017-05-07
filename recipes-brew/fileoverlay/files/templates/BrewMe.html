@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{{url_for('static', filename='raphael-min.js') }}"></script>
+<script src="{{url_for('static', filename='g.raphael-min.js') }}"></script>
+<script src="{{url_for('static', filename='g.line-min.js') }}"></script>
+<link href="{{url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function() {
+
+	//Make the page reload every 10s
+	setTimeout(function(){
+		window.location.reload(true);
+	},10000);
+
+	//setpoint input validation
+	$("#setPT_button").click(function (event) {
+		if (!$.isNumeric($("#set_point").val())) {
+			alert("Enter a NUMBER");
+			event.preventDefault();
+		}
+		if($("#set_point").val() < 0 || $("#set_point").val() > 99){
+			alert("Dont be silly");
+			event.preventDefault();
+		}
+		if($("#set_point").val() == {{setpt}}) {
+			event.preventDefault();
+		}
+	});
+
+	// create short term graph (POT). contains the last 5 min
+	var r1 = Raphael("recentPotGraph");
+	var longxAx = [0];
+	for (i=0; i<29; i++) {
+		longxAx[i] = -i/6;//convert to point per min
+	}
+	var line1 = r1.linechart(5,5,300,300,longxAx,{{potTempData[0:29]}}, {colors: ['#ac39ac'], axis: '0 1 1 0', axisxstep: '4', symbol: '', smooth: false, gutter: 10})	
+
+	// create short term graph (TUBE). contains the last 5 min
+	var r2 = Raphael("recentTubeGraph");
+	var longxAx = [0];
+	for (i=0; i<29; i++) {
+		longxAx[i] = -i/6;//convert to point per min
+	}
+	var line2 = r2.linechart(5,5,300,300,longxAx,{{tubeTempData[0:29]}}, {axis: '0 1 1 0', axisxstep: '4', symbol: '', smooth: false, gutter: 10})	
+	if ({{boiling}}){
+		r2.text(150,150, "TURN OFF PUMP").attr({fill: '#ff0000', 'font-size': 25});
+	}
+
+	// create long term graph (POT). contains the last 60 min
+	var r3 = Raphael("potGraph");
+	var longxAx = [0];
+	for (i=0; i<359; i++) {
+		longxAx[i] = -i/6;//convert to point per min
+	}
+	var line3 = r3.linechart(5,5,680,300,longxAx,{{potTempData}}, {colors: ['#ff1ab2'], axis: '0 1 1 0', axisxstep: '6', symbol: '', smooth: false, gutter: 10})	
+	line3.axis[1];
+	r3.label(60,30,"Pot Temperature");
+
+	// create long term graph (TUBE). contains the last 60 min
+	var r4 = Raphael("tubeGraph");
+	var longxAx = [0];
+	for (i=0; i<359; i++) {
+		longxAx[i] = -i/6;//convert to point per min
+	}
+	var line4 = r4.linechart(5,5,680,300,longxAx,{{tubeTempData}}, {colors: ['#0099e6'], axis: '0 1 1 0', axisxstep: '6', symbol: '', smooth: false, gutter: 10})
+	r4.label(60,30,"Tube Temperature");
+	if ({{boiling}}){
+		r4.text(350,150, "COVER POT AND CRACK LID").attr({fill: '#ff0000', 'font-size': 25});
+	}
+});
+</script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsables" aria-controls="navbar" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand">Brewcifier</a>
+		</div>
+		<div class="collapse navbar-collapse" id="collapsables">
+			<ul class="nav navbar-nav">
+				<li class="active"><p class="navbar-text">Pot Temp: {{potTempData[0]}} °C</p></li>
+				<li class="active"><p class="navbar-text">Tube Temp: {{tubeTempData[0]}} °C</p></li>
+				<li class="active"><p class="navbar-text">Set Point: {{setpt}} °C</p></li>
+				<li class="active"><p class="navbar-text">Voltage Regulator: {{vRegSetPt}} %</p></li>
+			</ul>
+			<form class="navbar-form navbar-right" role="search">
+				<div class="form-group">
+					<input type="number" name="newSetPT" style="max-width:105px" id="set_point" class="form-control" placeholder="Set Point">
+				</div>
+				<button type="submit" class="btn btn-success" value="Submit" name="changeSetPT" id="setPT_button">Submit</button>
+				<button type="submit" value="Turn Off Heat" name="stopHeat" class="btn btn-warning">Turn Off Heat</button>
+				<button type="submit" value="Boil" name="boil" class="btn btn-danger">Boil</button>
+			</form>
+		</div>
+	</div>
+</nav>
+
+
+<div class="container">
+	
+	<div class="col-md-8 boxes">
+	<div id='potGraph'></div>
+	</div>
+
+	<div class="col-md-4 boxes">
+	<div id='recentPotGraph'></div>
+	</div>
+
+	<div class="col-md-8 boxes">
+	<div id='tubeGraph'></div>
+	</div>
+
+	<div class="col-md-4 boxes">
+	<div id='recentTubeGraph'></div>
+	</div>
+
+</div>
+</div>
+</body>
+</html>

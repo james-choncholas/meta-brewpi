@@ -11,12 +11,13 @@ do_install() {
     #echo "dtoverlay=w1-gpio,gpiopin=21" >> ${D}/boot/config.txt
 
     # add the wifi password :)
+    #echo "
     #network={
     #    key_mgmt=WPA-PSK
     #    ssid="Brewcifier"
     #    psk="brewmebro"
     #}
-
+    #" >> ${D}/etc/wpa_supplicant.conf
 }
 
-#FILES_${PN} += "/brewpi"
+#FILES_${PN} += "/etc/wpa_supplicant.conf"

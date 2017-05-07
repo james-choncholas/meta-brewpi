@@ -68,7 +68,7 @@ bitbake brewpi-image
 Copy to the SD card:
 find the card using lsblk
 cd ~/Projects/poky-morty/meta-brewpi/scripts
-sudo ./mk2parts mmcblk0
+sudo ./mk2parts.sh mmcblk0
 sudo mkdir /media/card
 export OETMP=${HOME}/Projects/build/tmp
 export MACHINE=raspberrypi2
@@ -90,4 +90,5 @@ bitbake -s
 To clean the image
 cd ~/Projects/
 source poky-morty/oe-init-build-env
+udo ./mk2parts mmcblk0
 bitbake -c clean brewpi-image
