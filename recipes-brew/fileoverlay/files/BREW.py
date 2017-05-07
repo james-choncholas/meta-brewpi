@@ -4,7 +4,6 @@ import threading
 from flask import Flask, render_template, request, redirect, url_for
 
 from PIDBrewLoop import PIDBrewLoop
-from TextAlert import TextAlert
 from GlobalVars import GlobalVars
 
 myVars = GlobalVars()
