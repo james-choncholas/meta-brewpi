@@ -41,6 +41,11 @@ do_install() {
     install -m 0755 ${WORKDIR}/Test/GPIOTest.py         ${D}/brewpi/Test/
 
 
+    # at some point try doing something like this... xilinx does it
+    #for DTB_FILE in `ls *.dtb *.dtbo`; do
+    #    install -Dm 0644 ${B}/${DTB_FILE} ${DEPLOYDIR}/${DTB_FILE}
+    #done
+
     # below command copies everything in directory, but not recursive
     #cp -dr --no-preserve=ownership ${THISDIR}/files/* ${D}/brewpi
     
