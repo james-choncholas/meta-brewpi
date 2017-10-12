@@ -6,66 +6,64 @@ from PID import PID
 
 class PIDBrewLoop(threading.Thread):
 
-	def __init__(self, MyVars):
-		super(PIDBrewLoop, self).__init__()
-		self.daemon = True
-		self.myVars = MyVars
-		self.hardware = HardwareUtility()
-		self.pidControl = PID(80, 0.2, 0)	#P:100 I:0.2 D:0 for quick heat
-		self.pidControl.setPoint(self.myVars.getSetPT())
-		self.VRegSetpt = 0
-		self.PIDSetpt = 0
+    def __init__(self):
+        super(PIDBrewLoop, self).__init__()
+        self.daemon = True
+
+        self.Hardware = HardwareUtility()
+        self.PotTempHistory = [0]*359       #Used in Web Graphs
+        self.TubeTempHistory = [0]*359      #Used in Web Graphs
+        self.TemperatureSetPt = 0           #Set Point in Celcius
+        self.RestartPID = True              #Use when changing Set Point
+        self.VRegSetPt = 0                  #Voltage Regulator Set Point (0-100, capped at 55)
+        self.PidControl = PID(80, 0.2, 0)   #P:100 I:0.2 D:0 for quick heat
+        self.PidControl.setPoint(0)
 
 
-	def run(self):
-		while True:
+    def run(self):
+        SetVRegTo = 0
 
-			self.myVars.addPotTemp(self.hardware.read_pot_temp())
-			self.myVars.addTubeTemp(self.hardware.read_tube_temp())
-			self.myVars.setVRegSetPt(self.VRegSetpt)
-			time.sleep(10)
+        while True:
 
-			while self.myVars.getHeating() == True:
+            # Read temperature sensors
+            self.PotTempHistory.insert(0, self.Hardware.read_pot_temp())
+            self.PotTempHistory.pop()
+            self.TubeTempHistory.insert(0, self.Hardware.read_tube_temp())
+            self.TubeTempHistory.pop()
 
-				self.myVars.addPotTemp(self.hardware.read_pot_temp())
-				self.myVars.addTubeTemp(self.hardware.read_tube_temp())
-				self.myVars.setVRegSetPt(self.VRegSetpt)
+            # Temperature set point is 0 Celcius (or below). Turn off heating element
+            if self.TemperatureSetPt == 0:
+                self.SetVRegTo = 0
 
-				#Boil Mode (No PID)
-				if self.myVars.getBoil():
-					#Do this to get up to temp
-					if self.myVars.getPotTemp()[0] < 95 :
-						self.PIDSetpt = 65
+            #Boil Mode (No PID). Manually set voltage regualtor
+            elif self.TermperatureSetPt == 100:
+                if self.PotTempHistory[0] < 95 :
+                    self.SetVRegTo = 65
+                else:
+                    self.SetVRegTo = 35
 
-					#Cover the pot to maintain temp
-					else:
-						self.PIDSetpt = 35
+            #Set Point Mode (PID Algorithm)
+            else:
+                #if the setpoint has changed, restart PID
+                if self.RestartPID:
+                    self.pidControl.setPoint(TemperatureSetPt)
+                self.SetVRegTo = self.pidControl.update(self.TubeTempHistory[0])
+                self.SetVRegTo = int(self.SetVRegTo)
 
-				#Set Point Mode (PID Algorithm)
-				else:
-					#if the setpoint has changed restart PID
-					if self.myVars.getSetPTChanged():
-						self.pidControl.setPoint(self.myVars.getSetPT())
-						self.myVars.setSetPTChanged(False)
+            #Set the voltage regulator with the calculated value
+            print("SetVRegTo: " + str(self.SetVRegTo))
+            while self.VRegSetPt > self.SetVRegTo and self.VRegSetPt > 0 and self.VRegSetPt < 56:
+                self.Hardware.dec_temp()
+                self.VRegSetPt -= 1
+            while self.VRegSetPt < self.SetVRegTo and self.VRegSetPt > -1 and self.VRegSetPt < 55:
+                self.Hardware.inc_temp()
+                self.VRegSetPt +=1
+            print("VReg: " + str(self.VRegSetPt))
 
-					self.PIDSetpt = self.pidControl.update(self.myVars.getTubeTemp()[0])
-					self.PIDSetpt = int(self.PIDSetpt)
+            # Always sleep for 10s between loop iterations
+            time.sleep(10)
 
-					print("PIDSetpt: " +str(self.PIDSetpt))
-				
-				#Set the voltage regulator
-				while self.VRegSetpt > self.PIDSetpt and self.VRegSetpt > 0 and self.VRegSetpt < 56:
-					self.hardware.dec_temp()
-					self.VRegSetpt -= 1
-				while self.VRegSetpt < self.PIDSetpt and self.VRegSetpt > -1 and self.VRegSetpt < 55:
-					self.hardware.inc_temp()
-					self.VRegSetpt +=1
 
-				self.myVars.setVRegSetPt(self.VRegSetpt)
-				print("VReg: " + str(self.VRegSetpt))
-				time.sleep(10)
-
-			if self.myVars.getHeating() == False:
-				for i in range(0, self.VRegSetpt):
-					self.hardware.dec_temp()
-					self.VRegSetpt -= 1
+    def SetTemperatureSetPt(self, temp):
+        self.TemperatureSetPt = temp
+        self.RestartPID = True

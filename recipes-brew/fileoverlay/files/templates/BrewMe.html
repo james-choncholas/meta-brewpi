@@ -52,7 +52,7 @@ $(document).ready(function() {
 		longxAx[i] = -i/6;//convert to point per min
 	}
 	var line2 = r2.linechart(5,5,300,300,longxAx,{{tubeTempData[0:29]}}, {axis: '0 1 1 0', axisxstep: '4', symbol: '', smooth: false, gutter: 10})	
-	if ({{boiling}}){
+	if ("{{setpt == 100}}" == "False"){
 		r2.text(150,150, "TURN OFF PUMP").attr({fill: '#ff0000', 'font-size': 25});
 	}
 
@@ -74,7 +74,7 @@ $(document).ready(function() {
 	}
 	var line4 = r4.linechart(5,5,680,300,longxAx,{{tubeTempData}}, {colors: ['#0099e6'], axis: '0 1 1 0', axisxstep: '6', symbol: '', smooth: false, gutter: 10})
 	r4.label(60,30,"Tube Temperature");
-	if ({{boiling}}){
+	if ("{{setpt == 100}}" == "False"){
 		r4.text(350,150, "COVER POT AND CRACK LID").attr({fill: '#ff0000', 'font-size': 25});
 	}
 });

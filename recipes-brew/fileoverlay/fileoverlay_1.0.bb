@@ -5,9 +5,13 @@ LICENSE = "CLOSED"
 
 inherit allarch
 
+
+# checkout this link for info, and helpful definitions for environment variables
+# http://stackoverflow.com/questions/34067897/bitbake-not-installing-my-file-in-the-rootfs-image
+
+
 SRC_URI = "                        \
     file://BREW.py                 \
-    file://GlobalVars.py           \
     file://HardwareUtility.py      \
     file://PIDBrewLoop.py          \
     file://PID.py                  \
@@ -28,7 +32,6 @@ do_install() {
     install -d ${D}/brewpi/Test
  
     install -m 0755 ${WORKDIR}/BREW.py                  ${D}/brewpi/
-    install -m 0755 ${WORKDIR}/GlobalVars.py            ${D}/brewpi/
     install -m 0755 ${WORKDIR}/HardwareUtility.py       ${D}/brewpi/
     install -m 0755 ${WORKDIR}/PIDBrewLoop.py           ${D}/brewpi/
     install -m 0755 ${WORKDIR}/PID.py                   ${D}/brewpi/
@@ -49,8 +52,6 @@ do_install() {
     # below command copies everything in directory, but not recursive
     #cp -dr --no-preserve=ownership ${THISDIR}/files/* ${D}/brewpi
     
-    # checkout this link for info, and helpful definitions for environment variables
-    # http://stackoverflow.com/questions/34067897/bitbake-not-installing-my-file-in-the-rootfs-image
     #install -d ${D}/brewpi #create the destination directory (that's #{D})
     #install -m 755  ${THISDIR}/files/the_files
 
@@ -65,7 +66,6 @@ do_install() {
 
 FILES_${PN} += "                    \
     /brewpi/BREW.py                 \
-    /brewpi/GlobalVars.py           \
     /brewpi/HardwareUtility.py      \
     /brewpi/PIDBrewLoop.py          \
     /brewpi/PID.py                  \
