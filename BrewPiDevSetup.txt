@@ -101,4 +101,8 @@ To build for raspberry pi 3:
 Change the MACHINE variable in meta-brewpi/conf/local.conf to "raspberrypi2"
 When copyping to the SD card, export MACHINE="raspberrypi2"
 
+Once a bunch of python packages (python-flask, python-werkzeug ...) didn't build
+Error was "ERROR: oe_runmake failed"
+The solution was to run bitbake -c cleanall <python-flask>
+
 Note: most of the custom recipes exist in the recipes-brewpi but not all...
