@@ -36,7 +36,7 @@ class PIDBrewLoop(threading.Thread):
                 self.SetVRegTo = 0
 
             #Boil Mode (No PID). Manually set voltage regualtor
-            elif self.TermperatureSetPt == 100:
+            elif self.TemperatureSetPt == 100:
                 if self.PotTempHistory[0] < 95 :
                     self.SetVRegTo = 65
                 else:
@@ -46,8 +46,8 @@ class PIDBrewLoop(threading.Thread):
             else:
                 #if the setpoint has changed, restart PID
                 if self.RestartPID:
-                    self.pidControl.setPoint(TemperatureSetPt)
-                self.SetVRegTo = self.pidControl.update(self.TubeTempHistory[0])
+                    self.PidControl.setPoint(self.TemperatureSetPt)
+                self.SetVRegTo = self.PidControl.update(self.TubeTempHistory[0])
                 self.SetVRegTo = int(self.SetVRegTo)
 
             #Set the voltage regulator with the calculated value
