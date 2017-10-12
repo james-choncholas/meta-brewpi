@@ -33,7 +33,7 @@ class GlobalVars():
 	def getSetPTChanged(self):
 		self.temp = self.newSetPT
 		self.newSetPT = False
-		return temp
+		return self.temp
 
 	def setSetPTChanged(self, NewSetPT):
 		self.heating = True

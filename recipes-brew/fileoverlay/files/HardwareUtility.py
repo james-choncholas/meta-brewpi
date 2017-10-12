@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 
 #The DS18B20 in the pot thermowell must be attached to GPIO pin XX
 potThermoSN = '28-0000075599aa'
-tubeThermoSN = '28-00000756f342'
+tubeThermoSN = '28-000007555514'
 
 class HardwareUtility:
 
@@ -43,13 +43,23 @@ class HardwareUtility:
 #			cat w1_slave
 
 	def read_pot_temp_raw(self):
-		f = open(self.pot_device_file,'r')
+                try:
+		        f = open(self.pot_device_file,'r')
+                except:
+                        print("Cant read pot temp")
+                        return 0
+
 		lines = f.readlines()
 		f.close()
 		return lines
 	
 	def read_pot_temp(self):
 		lines = self.read_pot_temp_raw()
+
+                # error checking
+                if lines == 0:
+                        return 0
+
 		while lines[0].strip()[-3] != 'Y':
 			time.sleep(0.2)
 			lines = self.read_temp_raw()
@@ -60,13 +70,23 @@ class HardwareUtility:
 		return float(temp_c)
 
 	def read_tube_temp_raw(self):
-		f = open(self.tube_device_file,'r')
+                try:
+		        f = open(self.tube_device_file,'r')
+                except:
+                        print("Cant read tube temp")
+                        return 0
+
 		lines = f.readlines()
 		f.close()
 		return lines
 
 	def read_tube_temp(self):
 		lines = self.read_tube_temp_raw()
+
+                # error checking
+                if lines == 0:
+                        return 0
+
 		while lines[0].strip()[-3] != 'Y':
 			time.sleep(0.2)
 			lines = self.read_temp_raw()
@@ -86,17 +106,17 @@ class HardwareUtility:
 
 	def inc_temp(self):
 		GPIO.setup(self.inc_pin, GPIO.OUT)
-		GPIO.output(self.inc_pin, True)
-		time.sleep(.1)
 		GPIO.output(self.inc_pin, False)
+		time.sleep(.1)
+		GPIO.output(self.inc_pin, True)
 		time.sleep(.1)
 		return
 	
 	
 	def dec_temp(self):
 		GPIO.setup(self.dec_pin, GPIO.OUT)
-		GPIO.output(self.dec_pin, True)
-		time.sleep(0.1)
 		GPIO.output(self.dec_pin, False)
+		time.sleep(0.1)
+		GPIO.output(self.dec_pin, True)
 		time.sleep(0.1)
 		return

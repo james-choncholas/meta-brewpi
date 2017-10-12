@@ -5,7 +5,6 @@ from HardwareUtility import HardwareUtility
 from PID import PID
 
 class PIDBrewLoop(threading.Thread):
-#class PIDBrewLoop(object):
 
 	def __init__(self, MyVars):
 		super(PIDBrewLoop, self).__init__()
@@ -38,7 +37,7 @@ class PIDBrewLoop(threading.Thread):
 					if self.myVars.getPotTemp()[0] < 95 :
 						self.PIDSetpt = 65
 
-					#At this point the user should cover the pot to maintain temp
+					#Cover the pot to maintain temp
 					else:
 						self.PIDSetpt = 35
 
