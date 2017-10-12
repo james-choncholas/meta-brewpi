@@ -61,6 +61,7 @@ For example SRC_URI = "http://archive.apache.org/..."
 ~~~~~~~~~~~~~~~~~~~~ Build and Deploy ~~~~~~~~~~~~~~~~~~~~
 
 Run the build:
+cd ~/Projects/
 source poky-morty/oe-init-build-env
 bitbake brewpi-image
 
@@ -90,7 +91,6 @@ bitbake -s
 To clean the image
 cd ~/Projects/
 source poky-morty/oe-init-build-env
-sudo ./mk2parts mmcblk0
 bitbake -c clean brewpi-image
 
 To build for raspberry pi 2 v1.2 model B:

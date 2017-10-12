@@ -92,20 +92,25 @@ do_install() {
     ln -sf ../init.d/run-script      ${D}${sysconfdir}/rc5.d/S90run-script
 }
 
-#FILES_${PN} += "{sysconfdir}/init.d/run-script"
-
-FILES_${PN} += "                      \
-    ${sysconfdir}/init.d/run-script   \
+#FILES_${PN} += "                      \
+#    ${sysconfdir}/init.d/run-script   \
 #    ${sysconfdir}/rc1.d/K90run-script \
 #    ${sysconfdir}/rc2.d/K90run-script \
 #    ${sysconfdir}/rc3.d/K90run-script \
 #    ${sysconfdir}/rc4.d/K90run-script \
-    ${sysconfdir}/rc5.d/S90run-script \
-    ${sysconfdir}/init.d              \
+#    ${sysconfdir}/rc5.d/S90run-script \
+#    ${sysconfdir}/init.d              \
 #    ${sysconfdir}/rc1.d               \
 #    ${sysconfdir}/rc2.d               \
 #    ${sysconfdir}/rc3.d               \
 #    ${sysconfdir}/rc4.d               \
+#    ${sysconfdir}/rc5.d               \
+#    "
+
+FILES_${PN} += "                      \
+    ${sysconfdir}/init.d/run-script   \
+    ${sysconfdir}/rc5.d/S90run-script \
+    ${sysconfdir}/init.d              \
     ${sysconfdir}/rc5.d               \
     "
 
