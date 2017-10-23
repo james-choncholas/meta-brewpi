@@ -3,9 +3,9 @@ import glob
 import time
 import RPi.GPIO as GPIO
 
-#The DS18B20 in the pot thermowell must be attached to GPIO pin XX
-potThermoSN = '28-0000075599aa'
-tubeThermoSN = '28-000007555514'
+#The DS18B20 in the thermowell must be attached to GPIO pin 40 
+ThermoSN = '28-000007560f3b'
+
 
 class HardwareUtility:
 
@@ -15,11 +15,9 @@ class HardwareUtility:
 
 		base_dir = '/sys/bus/w1/devices/'
 
-		pot_device_folder = base_dir + potThermoSN
-		tube_device_folder = base_dir + tubeThermoSN
+		device_folder = base_dir + ThermoSN
 
-		self.pot_device_file = pot_device_folder + '/w1_slave'
-		self.tube_device_file = tube_device_folder + '/w1_slave'
+		self.device_file = device_folder + '/w1_slave'
 		
 		self.inc_pin = 37 #GPIO PIN YOU ATTACHED TO THE INCREMENT BUTTON
 		self.dec_pin = 35 #GPIO PIN YOU ATTACHED TO THE DECREMENT BUTTON
@@ -42,46 +40,19 @@ class HardwareUtility:
 #			cd 28-xxxx (change x's to serial number)
 #			cat w1_slave
 
-	def read_pot_temp_raw(self):
+	def read_temp_raw(self):
                 try:
-		        f = open(self.pot_device_file,'r')
+		        f = open(self.device_file,'r')
                 except:
-                        print("Cant read pot temp")
+                        print("Cant read temp")
                         return 0
 
 		lines = f.readlines()
 		f.close()
 		return lines
 	
-	def read_pot_temp(self):
-		lines = self.read_pot_temp_raw()
-
-                # error checking
-                if lines == 0:
-                        return 0
-
-		while lines[0].strip()[-3] != 'Y':
-			time.sleep(0.2)
-			lines = self.read_temp_raw()
-		equals_pos = lines[1].find('t=')
-		if equals_pos != -1:
-			temp_string = lines[1][equals_pos+2:]
-			temp_c = float(temp_string) / 1000.0
-		return float(temp_c)
-
-	def read_tube_temp_raw(self):
-                try:
-		        f = open(self.tube_device_file,'r')
-                except:
-                        print("Cant read tube temp")
-                        return 0
-
-		lines = f.readlines()
-		f.close()
-		return lines
-
-	def read_tube_temp(self):
-		lines = self.read_tube_temp_raw()
+	def read_temp(self):
+		lines = self.read_temp_raw()
 
                 # error checking
                 if lines == 0:

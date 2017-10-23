@@ -11,8 +11,7 @@ class PIDBrewLoop(threading.Thread):
         self.daemon = True
 
         self.Hardware = HardwareUtility()
-        self.PotTempHistory = [0]*359       #Used in Web Graphs
-        self.TubeTempHistory = [0]*359      #Used in Web Graphs
+        self.TempHistory = [0]*359       #Used in Web Graphs
         self.TemperatureSetPt = 0           #Set Point in Celcius
         self.RestartPID = True              #Use when changing Set Point
         self.VRegSetPt = 0                  #Voltage Regulator Set Point (0-100, capped at 55)
@@ -26,10 +25,8 @@ class PIDBrewLoop(threading.Thread):
         while True:
 
             # Read temperature sensors
-            self.PotTempHistory.insert(0, self.Hardware.read_pot_temp())
-            self.PotTempHistory.pop()
-            self.TubeTempHistory.insert(0, self.Hardware.read_tube_temp())
-            self.TubeTempHistory.pop()
+            self.TempHistory.insert(0, self.Hardware.read_temp())
+            self.TempHistory.pop()
 
             # Temperature set point is 0 Celcius (or below). Turn off heating element
             if self.TemperatureSetPt == 0:
@@ -37,7 +34,7 @@ class PIDBrewLoop(threading.Thread):
 
             #Boil Mode (No PID). Manually set voltage regualtor
             elif self.TemperatureSetPt == 100:
-                if self.PotTempHistory[0] < 95 :
+                if self.TempHistory[0] < 95 :
                     self.SetVRegTo = 65
                 else:
                     self.SetVRegTo = 35
@@ -47,7 +44,7 @@ class PIDBrewLoop(threading.Thread):
                 #if the setpoint has changed, restart PID
                 if self.RestartPID:
                     self.PidControl.setPoint(self.TemperatureSetPt)
-                self.SetVRegTo = self.PidControl.update(self.TubeTempHistory[0])
+                self.SetVRegTo = self.PidControl.update(self.TempHistory[0])
                 self.SetVRegTo = int(self.SetVRegTo)
 
             #Set the voltage regulator with the calculated value

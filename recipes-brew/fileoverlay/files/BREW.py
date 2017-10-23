@@ -33,8 +33,7 @@ def BrewMe():
 
 	#variables available in HTML
 	templateData = {
-	    'potTempData'   : BrewLoop.PotTempHistory,
-	    'tubeTempData'  : BrewLoop.TubeTempHistory,
+	    'tempData'   : BrewLoop.TempHistory,
 	    'setpt'         : str(BrewLoop.TemperatureSetPt),
 	    'vRegSetPt'     : str(BrewLoop.VRegSetPt),
 	}
