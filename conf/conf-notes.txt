@@ -1,5 +1,8 @@
-Some custom targets are
+Some contents of this folder needs to be moved to the build/conf directory
+See BrewPiDevSetup for more info
 
+Some custom targets are
+    brewpi-image
     audio-image
     console-image
     qt5-image
