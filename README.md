@@ -1,9 +1,10 @@
 # Brewcifier
    
 To build the Brewcifier code from scratch, START HERE!!!
+<br><br>
 Built on Ubuntu 16.0.4
 <br><br>
-Reference guide:
+Reference guide: <br>
 See http://www.jumpnowtek.com/rpi/Raspberry-Pi-Systems-with-Yocto.html
 <br><br>
 ## One time setup
@@ -15,6 +16,7 @@ After running install.sh you should see the following
 directory structure.
 <br><br>
 Reference folder structure:   
+```
 Projects/   
   yacto/   
     poky-morty/   
@@ -24,16 +26,19 @@ Projects/
     meta-brewpi/   
     build/   
       conf/   
-
+```
+<br>
 ## Build and Deploy
 
 ### Run the build:
+```
 cd $MYPATH
 source poky-morty/oe-init-build-env
 bitbake brewpi-image
-
+```
 
 ### Copy to the SD card:
+```
 find the card using lsblk
 cd ~/Projects/poky-morty/meta-brewpi/scripts
 sudo ./mk2parts.sh mmcblk0
@@ -42,7 +47,7 @@ export OETMP=${HOME}/Projects/build/tmp
 export MACHINE=raspberrypi
 ./copy_boot.sh mmcblk0
 ./copy_rootfs.sh mmcblk0 brewpi
-
+```
 
 ## Notes and Tools
 
