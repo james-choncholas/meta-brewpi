@@ -49,28 +49,36 @@ export MACHINE=raspberrypi
 The user name of the raspberry pi is root
 <br><br>
 ### To see list of available packages for adding to image file:
+```
 cd $MYPATH
 source poky-morty/oe-init-build-env
 bitbake -s
-
+```
+<br>
 ### To clean the image
+```
 cd $MYPATH   
 source poky-morty/oe-init-build-env   
 bitbake -c clean brewpi-image   
+```
+<br>
 
 ### To build for raspberry pi 2 v1.2 model B:
-Change the MACHINE variable in meta-brewpi/conf/local.conf to "raspberrypi"   
+Change the MACHINE variable in meta-brewpi/conf/local.conf to "raspberrypi"
+<br><br>
 When copyping to the SD card, export MACHINE="raspberrypi"   
-
+<br><br>
 ### To build for raspberry pi 3:
-Change the MACHINE variable in meta-brewpi/conf/local.conf to "raspberrypi2"   
-When copyping to the SD card, export MACHINE="raspberrypi2"   
+Change the MACHINE variable in meta-brewpi/conf/local.conf to "raspberrypi2"
+<br><br>
+When copyping to the SD card, export MACHINE="raspberrypi2"
+<br><br>
 
 ## Debugging 
 
 ### Once a bunch of python packages (python-flask, python-werkzeug ...) didn't build
 Error was "ERROR: oe_runmake failed"   
-The solution was to run bitbake -c cleanall <python-flask>   
+The solution was to run bitbake -c cleanall \<python-flask\>   
 <br>
 <br>
 Note: most of the custom recipes exist in the recipes-brewpi but not all...   
