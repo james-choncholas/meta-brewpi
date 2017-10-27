@@ -24,8 +24,10 @@ texinfo
 python2.7
 
 # Start work in the following directory
-PATH = ~/Projects
-MYIP = http://68.190.127.91
+# NOTE: If you're working off an external drive, make sure to set the exec
+# flag when mounting. Either do this with fstab or udev
+MYPATH=~/Projects
+MYIP=http://68.190.127.91
 mkdir $MYPATH
 
 # Clone my clone of the Yacto poky repository (morty branch):
@@ -36,12 +38,13 @@ git clone -b morty $MYIP/Brewcifier/poky-morty
 cd $MYPATH/poky-morty
 git clone -b morty $MYIP/Brewcifier/meta-openembedded
 git clone -b morty $MYIP/Brewcifier/meta-qt5
-git clone -b morty $MYIP/Brewcifier/meta-brewpi
+git clone -b master $MYIP/Brewcifier/meta-brewpi
 
 Create the build directory and link to config files:
+mkdir -p $MYPATH/build/
 mkdir -p $MYPATH/build/conf
-ln $MYPATH/poky-morty/meta-brewpi/conf/bblayers.conf $MYPATH/build/conf
-ln $MYPATH/poky-morty/meta-brewpi/conf/local.conf $MYPATH/build/conf
+cp $MYPATH/poky-morty/meta-brewpi/conf/bblayers.conf $MYPATH/build/conf
+cp $MYPATH/poky-morty/meta-brewpi/conf/local.conf $MYPATH/build/conf
 
 # Reference folder structure:
 # Projects/
