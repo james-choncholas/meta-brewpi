@@ -9,6 +9,11 @@ See http://www.jumpnowtek.com/rpi/Raspberry-Pi-Systems-with-Yocto.html
 <br><br>
 ## One time setup
 
+Get the install script with 
+```
+wget http://68.190.127.91/jim/DotFiles/raw/master/install.sh
+```
+<br><br>
 Before running install.sh modify the file to set
 the install location and the git repo location.
 <br><br>
