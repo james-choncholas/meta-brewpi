@@ -33,18 +33,21 @@ sudo apt-get install $packages
 # flags may have to be changed in fstab or udev.
 MYPATH=/media/jim/Data/Projects
 MYIP=http://68.190.127.91
-mkdir $MYPATH
+mkdir -p $MYPATH/yocto
 
 # Clone my clone of the Yacto poky repository (morty branch):
-cd $MYPATH
-git clone -b morty $MYIP/yocto/poky-morty
+cd $MYPATH/yocto
+git clone -b morty $MYIP/Brewcifier/poky-morty
 
 # Clone the following repositories inside the poky repo you just cloned:
-cd $MYPATH/poky-morty
-git clone -b morty $MYIP/yocto/poky-morty/meta-openembedded
-git clone -b morty $MYIP/yocto/poky-morty/meta-qt5
-git clone -b morty $MYIP/yocto/poky-morty/meta-raspberrypi
-git clone -b master $MYIP/meta-brewpi
+cd $MYPATH/yocto/poky-morty
+git clone -b morty $MYIP/Brewcifier/meta-openembedded
+git clone -b morty $MYIP/Brewcifier/meta-qt5
+git clone -b morty $MYIP/Brewcifier/meta-raspberrypi
+
+# Clone the application code repo
+cd $MYPATH/
+git clone -b master $MYIP/Brewcifier/meta-brewpi
 
 # Create the build directory and link to config files:
 mkdir -p $MYPATH/build/conf

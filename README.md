@@ -11,11 +11,12 @@ See http://www.jumpnowtek.com/rpi/Raspberry-Pi-Systems-with-Yocto.html
 
 Before running install.sh modify the file to set
 the install location and the git repo location.
-
+<br><br>
+Be sure the top level directory is on an ext4 filesystem.
+NTFS does not work.
+<br><br>
 After running install.sh you should see the following
 directory structure.
-<br><br>
-Reference folder structure:   
 ```
 Projects/   
   yacto/   
@@ -27,7 +28,7 @@ Projects/
     build/   
       conf/   
 ```
-<br>
+<br><br>
 ## Build and Deploy
 
 ### Run the build:
