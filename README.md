@@ -11,7 +11,7 @@ See http://www.jumpnowtek.com/rpi/Raspberry-Pi-Systems-with-Yocto.html
 
 Get the install script with 
 ```
-wget http://68.190.127.91/jim/DotFiles/raw/master/install.sh
+wget http://68.190.127.91/Brewcifier/meta-brewpi/raw/master/install.sh
 ```
 <br><br>
 Before running install.sh modify the file to set
