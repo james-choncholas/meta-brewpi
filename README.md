@@ -39,7 +39,7 @@ Projects/
 ### Run the build:
 ```
 cd $MYPATH
-source poky-morty/oe-init-build-env
+source yocto/poky-morty/oe-init-build-env
 bitbake brewpi-image
 ```
 
