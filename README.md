@@ -43,15 +43,13 @@ source yocto/poky-morty/oe-init-build-env
 bitbake brewpi-image
 ```
 
-### Copy to the SD card:
-```
-lsblk
-#note where the SD card is
-cd $MYPATH/meta-brewpi/scripts
 
+
+### Copy to the SD card:
+use `lsblk` to find the SD card. Update the location in $MYPATH/meta-brewpi/scripts/copyToSd.sh
 ```
-Open ./copyToSd and modify sdcard location and paths, then run
-<br><br>
+$MYPATH/meta-brewpi/scripts/copyToSd.sh
+```
 
 ## Notes and Tools
 
