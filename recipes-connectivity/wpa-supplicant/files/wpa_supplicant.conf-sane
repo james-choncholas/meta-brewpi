@@ -4,11 +4,11 @@ update_config=1
 fast_reauth=1
 ap_scan=1
 
-#network={
-#    key_mgmt=WPA-PSK
-#    ssid="<ssid>"
-#    psk="<passphrase>"
-#}
+network={
+    key_mgmt=WPA-PSK
+    ssid="Brewcifier"
+    psk="brewmebro"
+}
 
 # open network
 #network={

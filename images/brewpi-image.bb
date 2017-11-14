@@ -6,7 +6,6 @@ require console-image.bb
 
 BREW_PKGS = " \
     vim \
-    dhcpcd \
     freerdp \
     python-flask \
     rpi-gpio \

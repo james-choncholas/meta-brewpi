@@ -2,11 +2,5 @@
 
 sleep 10
 
-#connect to internet
-ifconfig wlan0 up
-wpa_passphrase Brewcifier brewmebro > /etc/wpa_supplicant.conf
-wpa_supplicant -Dwext -iwlan0 -c/etc/wpa_supplicant.conf -B
-dhcpcd -n wlan0 &
-
 #start appliance
 python /brewpi/BREW.py &
