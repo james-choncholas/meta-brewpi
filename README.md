@@ -47,14 +47,11 @@ bitbake brewpi-image
 ```
 lsblk
 #note where the SD card is
-cd /media/jim/ext4Backup/BrewBuild/meta-brewpi/scripts
-sudo ./mk2parts.sh mmcblk0
-sudo mkdir /media/card
-export OETMP=/media/jim/ext4Backup/BrewBuild/build/tmp/
-export MACHINE=raspberrypi
-./copy_boot.sh mmcblk0
-./copy_rootfs.sh mmcblk0 brewpi
+cd $MYPATH/meta-brewpi/scripts
+
 ```
+Open ./copyToSd and modify sdcard location and paths, then run
+<br><br>
 
 ## Notes and Tools
 
