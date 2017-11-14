@@ -15,7 +15,8 @@ class PIDBrewLoop(threading.Thread):
         self.TemperatureSetPt = 0           #Set Point in Celcius
         self.RestartPID = True              #Use when changing Set Point
         self.VRegSetPt = 0                  #Voltage Regulator Set Point (0-100, capped at 55)
-        self.PidControl = PID(80, 0.2, 0)   #P:100 I:0.2 D:0 for quick heat
+        self.MaxVRegSetPt = 65              #Highest alowable setpoint for voltage regulator
+        self.PidControl = PID(60, 0.2, 1)   #P:100 I:0.2 D:0 for quick heat
         self.PidControl.setPoint(0)
 
 
@@ -35,7 +36,7 @@ class PIDBrewLoop(threading.Thread):
             #Boil Mode (No PID). Manually set voltage regualtor
             elif self.TemperatureSetPt == 100:
                 if self.TempHistory[0] < 95 :
-                    self.SetVRegTo = 65
+                    self.SetVRegTo = MaxVRegSetPt;
                 else:
                     self.SetVRegTo = 35
 
@@ -49,10 +50,10 @@ class PIDBrewLoop(threading.Thread):
 
             #Set the voltage regulator with the calculated value
             print("SetVRegTo: " + str(self.SetVRegTo))
-            while self.VRegSetPt > self.SetVRegTo and self.VRegSetPt > 0 and self.VRegSetPt < 56:
+            while self.VRegSetPt > self.SetVRegTo and self.VRegSetPt > 0 and self.VRegSetPt < MaxVRegSetPt+1:
                 self.Hardware.dec_temp()
                 self.VRegSetPt -= 1
-            while self.VRegSetPt < self.SetVRegTo and self.VRegSetPt > -1 and self.VRegSetPt < 55:
+            while self.VRegSetPt < self.SetVRegTo and self.VRegSetPt > -1 and self.VRegSetPt < MaxVRegSetPt:
                 self.Hardware.inc_temp()
                 self.VRegSetPt +=1
             print("VReg: " + str(self.VRegSetPt))
