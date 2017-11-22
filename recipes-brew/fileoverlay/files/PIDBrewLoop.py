@@ -9,6 +9,7 @@ class PIDBrewLoop(threading.Thread):
     def __init__(self):
         super(PIDBrewLoop, self).__init__()
         self.daemon = True
+        self.lock = threading.Lock()
 
         self.Hardware = HardwareUtility()
         self.TempHistory = [0]*359       #Used in Web Graphs
@@ -21,7 +22,8 @@ class PIDBrewLoop(threading.Thread):
 
 
     def run(self):
-        SetVRegTo = 0
+        self.SetVRegTo = 0
+        self.lock.acquire()
 
         while True:
 
@@ -36,7 +38,7 @@ class PIDBrewLoop(threading.Thread):
             #Boil Mode (No PID). Manually set voltage regualtor
             elif self.TemperatureSetPt == 100:
                 if self.TempHistory[0] < 95 :
-                    self.SetVRegTo = MaxVRegSetPt;
+                    self.SetVRegTo = self.MaxVRegSetPt;
                 else:
                     self.SetVRegTo = 35
 
@@ -58,10 +60,16 @@ class PIDBrewLoop(threading.Thread):
                 self.VRegSetPt +=1
             print("VReg: " + str(self.VRegSetPt))
 
+            self.lock.release()
+            
             # Always sleep for 10s between loop iterations
             time.sleep(10)
+            
+            self.lock.acquire()
 
 
     def SetTemperatureSetPt(self, temp):
+      	self.lock.acquire()
         self.TemperatureSetPt = temp
         self.RestartPID = True
+        self.lock.release()
