@@ -48,7 +48,8 @@ bitbake brewpi-image
 ### Copy to the SD card:
 use `lsblk` to find the SD card. Update the location in $MYPATH/meta-brewpi/scripts/copyToSd.sh
 ```
-$MYPATH/meta-brewpi/scripts/copyToSd.sh
+cd $MYPATH/meta-brewpi/scripts
+./copyToSd.sh
 ```
 
 ## Notes and Tools
