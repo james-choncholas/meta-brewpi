@@ -50,10 +50,10 @@ class PIDBrewLoop(threading.Thread):
 
             #Set the voltage regulator with the calculated value
             print("SetVRegTo: " + str(self.SetVRegTo))
-            while self.VRegSetPt > self.SetVRegTo and self.VRegSetPt > 0 and self.VRegSetPt < MaxVRegSetPt+1:
+            while self.VRegSetPt > self.SetVRegTo and self.VRegSetPt > 0 and self.VRegSetPt < self.MaxVRegSetPt+1:
                 self.Hardware.dec_temp()
                 self.VRegSetPt -= 1
-            while self.VRegSetPt < self.SetVRegTo and self.VRegSetPt > -1 and self.VRegSetPt < MaxVRegSetPt:
+            while self.VRegSetPt < self.SetVRegTo and self.VRegSetPt > -1 and self.VRegSetPt < self.MaxVRegSetPt:
                 self.Hardware.inc_temp()
                 self.VRegSetPt +=1
             print("VReg: " + str(self.VRegSetPt))
