@@ -32,11 +32,13 @@ def BrewMe():
 		pass #unknown request attempted
 
 	#variables available in HTML
+    BrewLoop.lock.acquire()
 	templateData = {
-	    'tempData'   : BrewLoop.TempHistory,
+	    'tempData'      : BrewLoop.TempHistory,
 	    'setpt'         : str(BrewLoop.TemperatureSetPt),
 	    'vRegSetPt'     : str(BrewLoop.VRegSetPt),
 	}
+    BrewLoop.lock.release()
 	return render_template('BrewMe.html', **templateData)
 
 
