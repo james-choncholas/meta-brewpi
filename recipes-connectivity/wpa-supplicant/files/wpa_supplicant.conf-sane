@@ -5,10 +5,11 @@ fast_reauth=1
 ap_scan=1
 
 network={
-    key_mgmt=WPA-PSK
     ssid="Brewcifier"
     psk="brewmebro"
+    key_mgmt=WPA-PSK
 }
+
 
 # open network
 #network={

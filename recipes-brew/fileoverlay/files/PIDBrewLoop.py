@@ -1,6 +1,7 @@
 import time
 import threading
 import logging
+from subprocess import call
 from HardwareUtility import HardwareUtility
 from PID import PID
 
@@ -17,7 +18,7 @@ class PIDBrewLoop(threading.Thread):
         self.RestartPID = True              #Use when changing Set Point
         self.VRegSetPt = 0                  #Voltage Regulator Set Point (0-100, capped at 55)
         self.MaxVRegSetPt = 65              #Highest alowable setpoint for voltage regulator
-        self.PidControl = PID(60, 0.2, 1)   #P:100 I:0.2 D:0 for quick heat
+        self.PidControl = PID(40, 0.2, 1)   #P:100 I:0.2 D:0 for quick heat
         self.PidControl.setPoint(0)
 
 
@@ -26,6 +27,9 @@ class PIDBrewLoop(threading.Thread):
         self.lock.acquire()
 
         while True:
+
+            # Check that the network is still up
+            call(["/brewpi/restartNetwork.sh"])
 
             # Read temperature sensors
             self.TempHistory.insert(0, self.Hardware.read_temp())
@@ -61,10 +65,10 @@ class PIDBrewLoop(threading.Thread):
             print("VReg: " + str(self.VRegSetPt))
 
             self.lock.release()
-            
+
             # Always sleep for 10s between loop iterations
             time.sleep(10)
-            
+
             self.lock.acquire()
 
 

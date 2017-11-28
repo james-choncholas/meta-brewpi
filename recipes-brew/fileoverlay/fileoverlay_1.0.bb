@@ -10,18 +10,23 @@ inherit allarch
 # http://stackoverflow.com/questions/34067897/bitbake-not-installing-my-file-in-the-rootfs-image
 
 
-SRC_URI = "                        \
-    file://BREW.py                 \
-    file://HardwareUtility.py      \
-    file://PIDBrewLoop.py          \
-    file://PID.py                  \
-    file://README.txt              \
-    file://static/g.line-min.js    \
-    file://static/g.raphael-min.js \
-    file://static/raphael-min.js   \
-    file://static/style.css        \
-    file://templates/BrewMe.html   \
-    file://Test/GPIOTest.py        \
+SRC_URI = "                                 \
+    file://BREW.py                          \
+    file://HardwareUtility.py               \
+    file://restartNetwork.sh                \
+    file://PIDBrewLoop.py                   \
+    file://PID.py                           \
+    file://README.txt                       \
+    file://static/bootstrap-theme.min.css   \
+    file://static/bootstrap.min.css         \
+    file://static/bootstrap.min.js          \
+    file://static/g.line-min.js             \
+    file://static/g.raphael-min.js          \
+    file://static/jquery.min.js             \
+    file://static/raphael-min.js            \
+    file://static/style.css                 \
+    file://templates/BrewMe.html            \
+    file://Test/GPIOTest.py                 \
     "
 
 do_install() {
@@ -31,17 +36,22 @@ do_install() {
     install -d ${D}/brewpi/templates
     install -d ${D}/brewpi/Test
  
-    install -m 0755 ${WORKDIR}/BREW.py                  ${D}/brewpi/
-    install -m 0755 ${WORKDIR}/HardwareUtility.py       ${D}/brewpi/
-    install -m 0755 ${WORKDIR}/PIDBrewLoop.py           ${D}/brewpi/
-    install -m 0755 ${WORKDIR}/PID.py                   ${D}/brewpi/
-    install -m 0755 ${WORKDIR}/README.txt               ${D}/brewpi/
-    install -m 0755 ${WORKDIR}/static/g.line-min.js     ${D}/brewpi/static/
-    install -m 0755 ${WORKDIR}/static/g.raphael-min.js  ${D}/brewpi/static/
-    install -m 0755 ${WORKDIR}/static/raphael-min.js    ${D}/brewpi/static/
-    install -m 0755 ${WORKDIR}/static/style.css         ${D}/brewpi/static/
-    install -m 0755 ${WORKDIR}/templates/BrewMe.html    ${D}/brewpi/templates/
-    install -m 0755 ${WORKDIR}/Test/GPIOTest.py         ${D}/brewpi/Test/
+    install -m 0755 ${WORKDIR}/BREW.py                          ${D}/brewpi/
+    install -m 0755 ${WORKDIR}/HardwareUtility.py               ${D}/brewpi/
+    install -m 0755 ${WORKDIR}/restartNetwork.sh                   ${D}/brewpi/
+    install -m 0755 ${WORKDIR}/PIDBrewLoop.py                   ${D}/brewpi/
+    install -m 0755 ${WORKDIR}/PID.py                           ${D}/brewpi/
+    install -m 0755 ${WORKDIR}/README.txt                       ${D}/brewpi/
+    install -m 0755 ${WORKDIR}/static/bootstrap-theme.min.css   ${D}/brewpi/static/
+    install -m 0755 ${WORKDIR}/static/bootstrap.min.css         ${D}/brewpi/static/
+    install -m 0755 ${WORKDIR}/static/bootstrap.min.js          ${D}/brewpi/static/
+    install -m 0755 ${WORKDIR}/static/g.line-min.js             ${D}/brewpi/static/
+    install -m 0755 ${WORKDIR}/static/g.raphael-min.js          ${D}/brewpi/static/
+    install -m 0755 ${WORKDIR}/static/jquery.min.js             ${D}/brewpi/static/
+    install -m 0755 ${WORKDIR}/static/raphael-min.js            ${D}/brewpi/static/
+    install -m 0755 ${WORKDIR}/static/style.css                 ${D}/brewpi/static/
+    install -m 0755 ${WORKDIR}/templates/BrewMe.html            ${D}/brewpi/templates/
+    install -m 0755 ${WORKDIR}/Test/GPIOTest.py                 ${D}/brewpi/Test/
 
 
     # at some point try doing something like this... xilinx does it
@@ -67,11 +77,16 @@ do_install() {
 FILES_${PN} += "                    \
     /brewpi/BREW.py                 \
     /brewpi/HardwareUtility.py      \
+    /brewpi/restartNetwork.sh      \
     /brewpi/PIDBrewLoop.py          \
     /brewpi/PID.py                  \
     /brewpi/README.txt              \
+    /brewpi/static/bootstrap-theme.min.css   \
+    /brewpi/static/bootstrap.min.css         \
+    /brewpi/static/bootstrap.min.js          \
     /brewpi/static/g.line-min.js    \
     /brewpi/static/g.raphael-min.js \
+    /brewpi/static/jquery.min.js             \
     /brewpi/static/raphael-min.js   \
     /brewpi/static/style.css        \
     /brewpi/templates/BrewMe.html   \
