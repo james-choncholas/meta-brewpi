@@ -38,24 +38,23 @@ $(document).ready(function() {
 	// create short term graph (POT). contains the last 5 min
 	var r1 = Raphael("shortGraph");
 	var longxAx = [0];
-	for (i=0; i<29; i++) {
-		longxAx[i] = -i/6;//convert to point per min
+	for (i=0; i<299; i++) {
+		longxAx[i] = -i/60;//convert to point per min
 	}
-	var line1 = r1.linechart(5,5,680,300,longxAx,{{tempData[0:29]}}, {colors: ['#ac39ac'], axis: '0 1 1 0', axisxstep: '4', symbol: '', smooth: false, gutter: 10})	
+	var line1 = r1.linechart(5,5,680,300,longxAx,{{tempData[0:299]}}, {colors: ['#ac39ac'], axis: '0 1 1 0', axisxstep: '4', symbol: '', smooth: false, gutter: 20})	
 
 	// create long term graph (POT). contains the last 60 min
 	var r3 = Raphael("longGraph");
 	var longxAx = [0];
-	for (i=0; i<359; i++) {
-		longxAx[i] = -i/6;//convert to point per min
+	for (i=0; i<3599; i++) {
+		longxAx[i] = -i/60;//convert to point per min
 	}
-	var line3 = r3.linechart(5,5,680,300,longxAx,{{tempData}}, {colors: ['#ff1ab2'], axis: '0 1 1 0', axisxstep: '6', symbol: '', smooth: false, gutter: 10})	
+	var line3 = r3.linechart(5,5,680,300,longxAx,{{tempData}}, {colors: ['#ff1ab2'], axis: '0 1 1 0', axisxstep: '6', symbol: '', smooth: false, gutter: 20})	
 	line3.axis[1];
 	//r3.label(60,30,"Temperature");
 
 });
 </script>
-
 </head>
 
 <body>
@@ -82,8 +81,8 @@ $(document).ready(function() {
 					<input type="number" name="newSetPT" style="max-width:105px" id="set_point" class="form-control" placeholder="Set Point">
 				</div>
 				<button type="submit" class="btn btn-success" value="Submit" name="changeSetPT" id="setPT_button">Submit</button>
-				<button type="submit" value="Turn Off Heat" name="stopHeat" class="btn btn-warning">Turn Off Heat</button>
-				<button type="submit" value="Boil" name="boil" class="btn btn-danger">Boil</button>
+				<button type="submit" value="Turn Off Heat" name="boil" class="btn btn-warning">Boil</button>
+				<button type="submit" value="Boil" name="stopHeat" class="btn btn-danger">Turn Off Heat</button>
 			</form>
 		</div>
 	</div>
