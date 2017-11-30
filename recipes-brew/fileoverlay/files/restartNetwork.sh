@@ -4,7 +4,7 @@ LOG_PATH="/var/log/network.log"
 now=$(date +"%m-%d %r")
 
 iface='wlan0'
-pingip='google.com'
+pingip='192.168.2.1'
 
 /bin/ping -c 2 -I $iface $pingip > /dev/null 2> /dev/null
 if [ $? -ge 1 ] ; then
