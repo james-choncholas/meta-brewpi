@@ -1,17 +1,30 @@
 # Brewcifier
-   
-To build the Brewcifier code from scratch, START HERE!!!
+
+This is my take on the BrewPi - an automated, PID controlled, electronic beer brewing system.
+<br>
+Inputs: A one-wire temperature sensor   
+Outputs: Two GPIO pins that toggle high and low to simulate button presses on a voltage regulator. 
+The voltage regulator is connected to a heating element which heats the beer.
 <br><br>
+stay tuned for a demo video.
+
+## Software Architecture
+This repository is a layer in a yocto open embedded system. Yocto is tool to create custom linux distributions.
+This layer adds required packages and configuration files to the poky-morty open embedded distribution
+as well as application level code. This repository was forked from https://github.com/jumpnow/meta-rpi.
+The Python scripts that control the beer brewing process live in the folder `recipes-brew/fileoverlay/files`
+   
+## One time setup
+
 Built on Ubuntu 16.0.4
 <br><br>
 Reference guide: <br>
 See http://www.jumpnowtek.com/rpi/Raspberry-Pi-Systems-with-Yocto.html
 <br><br>
-## One time setup
 
 Get the install script with 
 ```
-wget http://68.190.127.91/Brewcifier/meta-brewpi/raw/master/install.sh
+wget http://.../Brewcifier/meta-brewpi/raw/master/install.sh
 ```
 <br><br>
 Before running install.sh modify the file to set
@@ -128,4 +141,3 @@ Make sure your disk has been mounted with the exec flag. Check fstab or udev
     revision: HEAD
     commit: cce6292
 
-    meta-rpi layer maintainer: Scott Ellis <scott@jumpnowtek.com>
