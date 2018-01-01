@@ -1,14 +1,13 @@
 # Brewcifier
 
 This is my take on the BrewPi - an automated, PID controlled, electronic beer brewing system.
-<br>
+<br><br>
 See it in action: https://youtu.be/udd92xAymgw
-<br>
+<br><br>
 Inputs: A one-wire temperature sensor   
 Outputs: Two GPIO pins that toggle high and low to simulate button presses on a voltage regulator. 
 The voltage regulator is connected to a heating element which heats the beer.
 <br><br>
-stay tuned for a demo video.
 
 ## Software Architecture
 This repository is a layer in a yocto open embedded system. Yocto is tool to create custom linux distributions.
