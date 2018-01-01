@@ -2,6 +2,8 @@
 
 This is my take on the BrewPi - an automated, PID controlled, electronic beer brewing system.
 <br>
+See it in action: https://youtu.be/udd92xAymgw
+<br>
 Inputs: A one-wire temperature sensor   
 Outputs: Two GPIO pins that toggle high and low to simulate button presses on a voltage regulator. 
 The voltage regulator is connected to a heating element which heats the beer.
