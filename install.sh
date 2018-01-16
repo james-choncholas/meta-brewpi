@@ -32,7 +32,7 @@ sudo apt-get install $packages
 # as well as if the drive is mounted with the exec flag. Drive mounting
 # flags may have to be changed in fstab or udev.
 MYPATH=/media/jim/Data/Projects
-MYIP=http://68.190.127.91
+MYIP=https://github.com/james-choncholas
 mkdir -p $MYPATH/yocto
 
 # Clone my clone of the Yacto poky repository (morty branch):
