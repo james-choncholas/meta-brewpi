@@ -37,17 +37,17 @@ mkdir -p $MYPATH/yocto
 
 # Clone my clone of the Yacto poky repository (morty branch):
 cd $MYPATH/yocto
-git clone -b morty $MYIP/Brewcifier/poky-morty
+git clone -b morty $MYIP/poky-morty
 
 # Clone the following repositories inside the poky repo you just cloned:
 cd $MYPATH/yocto/poky-morty
-git clone -b morty $MYIP/Brewcifier/meta-openembedded
-git clone -b morty $MYIP/Brewcifier/meta-qt5
-git clone -b morty $MYIP/Brewcifier/meta-raspberrypi
+git clone -b morty $MYIP/meta-openembedded
+git clone -b morty $MYIP/meta-qt5
+git clone -b morty $MYIP/meta-raspberrypi
 
 # Clone the application code repo
 cd $MYPATH/
-git clone -b master $MYIP/Brewcifier/meta-brewpi
+git clone -b master $MYIP/meta-brewpi
 
 # Create the build directory and link to config files:
 mkdir -p $MYPATH/build/conf
